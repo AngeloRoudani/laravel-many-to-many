@@ -26,10 +26,10 @@ class UpdateProjectRequest extends FormRequest
         return [
         
             'name' => 'required|max:50',
-            'language_dev' => 'required|max:50',
             'framework' => 'max:50',
             'start_date' => 'required|date_format:Y-m-d',
             'description' => 'required|max:10000',
+            'type_id'=> 'nullable|exists:types,id',
             'technologies' => 'exists:technologies,id'
         ];
     }
@@ -38,8 +38,6 @@ class UpdateProjectRequest extends FormRequest
         return [
             'name.required' => "Nome progetto necessario",
             'name.max' => "Il nome deve avere al massimo di 50 caratteri",
-            'language_dev.required' => "Il tipo di linguaggio è necessario",
-            'language_dev.max' => "Il tipo di linguaggio deve avere al massimo di 50 caratteri",
             'framework.max' => "Il nome del framework deve avere al massimo di 50 caratteri",
             'start_date.required' => "La data è necessaria",
             'start_date.date_format' => "La data deve avere questo formato: Y-m-d",

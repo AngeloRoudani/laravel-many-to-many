@@ -25,6 +25,9 @@
                     <label class="btn btn-outline-primary" for="tech_{{$technology->name}}">{{$technology->name}}</label>
                     @endforeach
                 </div>
+                @error('technologies')
+                        <div class="alert alert-danger">{{ $message }}</div>
+                @enderror
                 
                 <!-------------------------Fine Checkbox------------------------------->
                 <div class="mb-3">

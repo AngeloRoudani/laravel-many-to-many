@@ -43,13 +43,11 @@ class ProjectController extends Controller
      */
     public function store(StoreProjectRequest $request)
     {
+        // dd($request->all());
         $form_project = $request->validated();
 
         $newProject = new Project();
         $newProject->name = $form_project["name"];
-        if ($request->has('technologies')) {
-            $newProject->technologies()->attach($request->technologies);
-        }
         $newProject->framework = $form_project["framework"];
         $newProject->start_date = $form_project["start_date"];
         $newProject->type_id = $form_project["type_id"];
@@ -57,7 +55,9 @@ class ProjectController extends Controller
         $newProject->slug = Str::slug($newProject->name, '-');
         $newProject->save();
 
-        
+        if ($request->has('technologies')) {
+            $newProject->technologies()->attach($request->technologies);
+        }
 
         return redirect()->route('admin.projects.index');
     }
@@ -70,7 +70,8 @@ class ProjectController extends Controller
      */
     public function show(Project $project)
     {
-        return view('admin.show', compact('project'));
+        $technologies = Technology::all(); 
+        return view('admin.show', compact('project','technologies'));
     }
 
     /**
@@ -97,7 +98,8 @@ class ProjectController extends Controller
     {   
         
         $update_project = $request->validated();
-        $project->technologies()->sync($request->technologies);                                                                                                                 
+        $project->technologies()->sync($request->technologies);      
+                                                                                                        
         $project->update($update_project);
 
         return redirect()->route('admin.projects.show', ['project'=> $project->slug]);
