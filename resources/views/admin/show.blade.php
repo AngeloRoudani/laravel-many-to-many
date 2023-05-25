@@ -8,7 +8,9 @@
         <div class="card mt-2">
             <div class="card-body">
                 <h5 class="card-title">{{$project->name}}</h5>
-                <h6 class="card-subtitle mb-2 text-body-secondary">Linguaggio: {{$project->language_dev}}</h6>
+                @foreach ($project->$technologies as $technology )
+                    <h6 class="card-subtitle mb-2 text-body-secondary">Tecnologie: {{$technology->name}}</h6>
+                @endforeach
                 <h6 class="card-subtitle mb-2 text-body-secondary">Framework: {{$project->framework}}</h6>
                 <h6 class="card-subtitle mb-2 text-body-secondary">Data inizio: {{$project->start_date}}</h6>
                 @if ($project->type_id)

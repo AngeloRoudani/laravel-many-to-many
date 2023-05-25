@@ -15,13 +15,19 @@
                         <div class="alert alert-danger">{{ $message }}</div>
                     @enderror
                 </div>
-                <div class="mb-3">
-                    <label for="language_dev" class="form-label">Modifica Linguaggio</label>
-                    <input type="text" id="language_dev" name="language_dev" class="form-control" value="{{ old('language_dev') ?? $project->language_dev  }}">
-                    @error('language_dev')
-                        <div class="alert alert-danger">{{ $message }}</div>
-                    @enderror
+
+                <!----------------------------checkbox---------------------------->
+                <div class="btn-group" role="group">
+                    @foreach ($technologies as $technology)
+                    <input type="checkbox" class="btn-check"
+                            @if (in_array($technology->id , old('technologies', []))) checked @endif
+                            id="tech_{{$technology->name}}" name="technologies[]" 
+                            value="{{$technology->id}}" autocomplete="off">
+                    <label class="btn btn-outline-primary" for="tech_{{$technology->name}}">{{$technology->name}}</label>
+                    @endforeach
                 </div>
+                <!----------------------------fine checkbox---------------------------->
+
                 <div class="mb-3">
                     <label for="framework" class="form-label">Modifica Framework Usato</label>
                     <input type="text" id="framework" name="framework" class="form-control" value="{{ old('framework') ?? $project->framework  }}">

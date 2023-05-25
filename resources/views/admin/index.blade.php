@@ -9,7 +9,6 @@
         <div class="card mt-2" style="width: 18rem;">
             <div class="card-body">
                 <h5 class="card-title">{{$project->name}}</h5>
-                <h6 class="card-subtitle mb-2 text-body-secondary">Linguaggio: {{$project->language_dev}}</h6>
                 <h6 class="card-subtitle mb-2 text-body-secondary">Framework: {{$project->framework}}</h6>
                 <h6 class="card-subtitle mb-2 text-body-secondary">Data inizio: {{$project->start_date}}</h6>
                 <a href="{{route('admin.projects.edit',['project'=>$project->slug])}}" class="btn btn-success">Modifica</a>

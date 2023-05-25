@@ -14,13 +14,19 @@
                         <div class="alert alert-danger">{{ $message }}</div>
                     @enderror
                 </div>
-                <div class="mb-3">
-                    <label for="language_dev" class="form-label">Linguaggio di Programmazione</label>
-                    <input type="text" id="language_dev" name="language_dev" class="form-control" value="{{ old('language_dev') }}">
-                    @error('language_dev')
-                        <div class="alert alert-danger">{{ $message }}</div>
-                    @enderror
+                <!-------------------------Checkbox------------------------------->
+                
+                <div class="btn-group" role="group">
+                    @foreach ($technologies as $technology)
+                    <input type="checkbox" class="btn-check"
+                            @if (in_array($technology->id , old('technologies', []))) checked @endif
+                            id="tech_{{$technology->name}}" name="technologies[]" 
+                            value="{{$technology->id}}" autocomplete="off">
+                    <label class="btn btn-outline-primary" for="tech_{{$technology->name}}">{{$technology->name}}</label>
+                    @endforeach
                 </div>
+                
+                <!-------------------------Fine Checkbox------------------------------->
                 <div class="mb-3">
                     <label for="framework" class="form-label">Framework Usato</label>
                     <input type="text" id="framework" name="framework" class="form-control" value="{{ old('framework') }}">
@@ -35,8 +41,8 @@
                         <div class="alert alert-danger">{{ $message }}</div>
                     @enderror
                 </div>
-                <!-- Select del tipo di progetto-->
-                <label for="type_id" class="form-label">Data di inizio</label>
+                <!--------------------- Select del tipo di progetto-------------------------->
+                <label for="type_id" class="form-label">Tipo di progetto</label>
                 <select class="form-select" id="type_id" name="type_id">
                     <option @selected(old('type_id') == '') value="">Nessun Tipo</option>
                     @foreach ($types as $type )
@@ -46,8 +52,8 @@
                 </select>
                 @error('type_id')
                         <div class="alert alert-danger">{{ $message }}</div>
-                    @enderror
-
+                @enderror
+                <!------------------------------Fine Select-------------------------------------->
                 <div class="mb-3">
                     <label for="description" class="form-label">Descrizione</label>
                     <textarea type="text" id="description" name="description" class="form-control">{{ old('description') }}</textarea>

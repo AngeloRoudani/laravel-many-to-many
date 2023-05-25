@@ -7,6 +7,7 @@ use App\Http\Requests\Project\UpdateProjectRequest;
 use App\Models\Type;
 use App\Http\Controllers\Controller;
 use App\Models\Project;
+use App\Models\Technology;
 use Illuminate\Support\Str;
 
 class ProjectController extends Controller
@@ -30,7 +31,8 @@ class ProjectController extends Controller
     public function create()
     {
         $types = Type::all();
-        return view('admin.create', compact('types'));
+        $technologies = Technology::all();
+        return view('admin.create', compact('types', 'technologies'));
     }
 
     /**
@@ -45,13 +47,17 @@ class ProjectController extends Controller
 
         $newProject = new Project();
         $newProject->name = $form_project["name"];
-        $newProject->language_dev = $form_project["language_dev"];
+        if ($request->has('technologies')) {
+            $newProject->technologies()->attach($request->technologies);
+        }
         $newProject->framework = $form_project["framework"];
         $newProject->start_date = $form_project["start_date"];
         $newProject->type_id = $form_project["type_id"];
         $newProject->description = $form_project["description"];
         $newProject->slug = Str::slug($newProject->name, '-');
         $newProject->save();
+
+        
 
         return redirect()->route('admin.projects.index');
     }
@@ -76,7 +82,8 @@ class ProjectController extends Controller
     public function edit(Project $project)
     {
         $types = Type::all();
-        return view('admin.edit', compact('project', 'types'));
+        $technologies = Technology::all();
+        return view('admin.edit', compact('project', 'types', 'technologies'));
     }
 
     /**
@@ -89,7 +96,8 @@ class ProjectController extends Controller
     public function update(UpdateProjectRequest $request, Project $project)
     {   
         
-        $update_project = $request->validated();                                                                                                                  
+        $update_project = $request->validated();
+        $project->technologies()->sync($request->technologies);                                                                                                                 
         $project->update($update_project);
 
         return redirect()->route('admin.projects.show', ['project'=> $project->slug]);
