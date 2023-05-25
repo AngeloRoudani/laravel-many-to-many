@@ -30,7 +30,7 @@ class UpdateProjectRequest extends FormRequest
             'framework' => 'max:50',
             'start_date' => 'required|date_format:Y-m-d',
             'description' => 'required|max:10000',
-
+            'technologies' => 'exists:technologies,id'
         ];
     }
     public function messages() {

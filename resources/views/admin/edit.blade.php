@@ -7,7 +7,7 @@
 
             <form action="{{route('admin.projects.update',['project' => $project->slug])}}" method="POST">
             @csrf
-            @method('PUT')
+            @method('PATCH')
                 <div class="mb-3">
                     <label for="name" class="form-label">Modifica progetto</label>
                     <input type="text" id="name" name="name" class="form-control" value="{{ old('name') ?? $project->name }}">
@@ -17,7 +17,8 @@
                 </div>
 
                 <!----------------------------checkbox---------------------------->
-                <div class="btn-group" role="group">
+                <div>Tecnologia usata:</div>
+                <div class="btn-group" role="group"> 
                     @foreach ($technologies as $technology)
                     <input type="checkbox" class="btn-check"
                             @if (in_array($technology->id , old('technologies', []))) checked @endif
