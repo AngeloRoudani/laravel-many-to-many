@@ -8,7 +8,7 @@
         @foreach($projects as $project)
         <div class="card mt-2" style="width: 18rem;">
             @if($project->image)
-                <img src="{{asset('storage/' . $project->image)}}" class="card-img-top" alt="{{$project->name}}">
+                <img src="{{asset('storage/'.$project->image)}}" class="card-img-top" alt="{{$project->name}}">
             @endif
             <div class="card-body">
                 <h5 class="card-title">{{$project->name}}</h5>
