@@ -5,7 +5,7 @@
     <div class="container">
         <div class="row justify-content-between">
 
-            <form action="{{route('admin.projects.update',['project' => $project->slug])}}" method="POST">
+            <form action="{{route('admin.projects.update',['project' => $project->slug])}}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PATCH')
                 <div class="mb-3">
@@ -13,6 +13,19 @@
                     <input type="text" id="name" name="name" class="form-control" value="{{ old('name') ?? $project->name }}">
                     @error('name')
                         <div class="alert alert-danger">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <!---------------------input dei file immagine--------------->
+                <div class="mb-3">
+
+                    <label for="image" class="form-label">Modifica immagine</label>
+
+                    <input type="file" class="form-control @error('image') is-invalid @enderror " id="image" name="image">
+                    @error('image')
+                        <div class="invalid-feedback">
+                            {{$message}}
+                        </div>
                     @enderror
                 </div>
 

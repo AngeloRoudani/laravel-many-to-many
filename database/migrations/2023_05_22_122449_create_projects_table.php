@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('name', 50)->unique();
             $table->string('framework', 50);
+            $table->string('image', 200)->nullable();
             $table->date('start_date');
             $table->string('description', 10000);
             $table->string('slug');

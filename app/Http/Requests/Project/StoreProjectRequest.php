@@ -31,7 +31,8 @@ class StoreProjectRequest extends FormRequest
             'start_date' => 'required|date_format:Y-m-d',
             'description' => 'required|max:10000',
             'type_id'=> 'nullable|exists:types,id',
-            'technologies' => 'exists:technologies,id'
+            'technologies' => 'exists:technologies,id',
+            'image' => 'nullable|image'
 
         ];
     }

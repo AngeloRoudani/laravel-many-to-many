@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Project;
 use App\Models\Technology;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 
 class ProjectController extends Controller
 {
@@ -59,6 +60,11 @@ class ProjectController extends Controller
             $newProject->technologies()->attach($request->technologies);
         }
 
+        if ($request->hasFile('image')) {
+            $img_path = Storage::put('file_img', $request->image);
+            $form_project['image'] = $img_path;
+        }
+
         return redirect()->route('admin.projects.index');
     }
 
@@ -70,8 +76,8 @@ class ProjectController extends Controller
      */
     public function show(Project $project)
     {
-        $technologies = Technology::all(); 
-        return view('admin.show', compact('project','technologies'));
+        
+        return view('admin.show', compact('project'));
     }
 
     /**
@@ -98,7 +104,16 @@ class ProjectController extends Controller
     {   
         
         $update_project = $request->validated();
-        $project->technologies()->sync($request->technologies);      
+        $project->technologies()->sync($request->technologies);  
+        
+        if ($request->hasFile('image')) {
+
+            if($project->image) {
+                Storage::delete($project->image);
+                $img_path = Storage::put('file_img', $request->image);
+                $update_project['image'] = $img_path;
+            }
+        }
                                                                                                         
         $project->update($update_project);
 

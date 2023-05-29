@@ -6,9 +6,12 @@
 
     <div class="row col-5 m-auto">
         <div class="card mt-2">
+            @if($project->image)
+                <img src="{{asset('storage/'.$project->image)}}" class="card-img-top" alt="{{$project->name}}">
+            @endif
             <div class="card-body">
                 <h5 class="card-title">{{$project->name}}</h5>
-                @foreach ($project->$technologies as $technology )
+                @foreach ($project->technologies as $technology )
                     <h6 class="card-subtitle mb-2 text-body-secondary">Tecnologie: {{$technology->name}}</h6>
                 @endforeach
                 <h6 class="card-subtitle mb-2 text-body-secondary">Framework: {{$project->framework}}</h6>
